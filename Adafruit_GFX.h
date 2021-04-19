@@ -280,7 +280,7 @@ public:
 
 
 
-  // New/alt initButton() uses upper-left corner & size
+  // New/alt initButton() uses upper-left corner & size, with 'pressedcolor'
   void initButtonUL(Adafruit_GFX *gfx, int16_t x1, int16_t y1, uint16_t w,
                     uint16_t h, uint16_t outline, uint16_t fill,
                     uint16_t textcolor, uint16_t pressedcolor, char *label, uint8_t textsize);
