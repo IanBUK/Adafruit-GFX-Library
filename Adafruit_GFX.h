@@ -117,7 +117,13 @@ public:
   void setTextSize(uint8_t s);
   void setTextSize(uint8_t sx, uint8_t sy);
   void setFont(const GFXfont *f = NULL);
-  GFXfont* getFont();
+  /**********************************************************************/
+  /*!
+    @brief  Get the current font
+    @returns    current font
+  */
+  /**********************************************************************/
+  const GFXfont *getFont() const { return gfxFont; };
 
   /**********************************************************************/
   /*!
@@ -226,6 +232,13 @@ public:
   */
   /************************************************************************/
   int16_t getCursorY(void) const { return cursor_y; };
+  
+/**************************************************************************/
+/*!
+	@brief      Get the current font
+*/
+/**************************************************************************/
+  GFXfont* getFont();
 
 protected:
   void charBounds(unsigned char c, int16_t *x, int16_t *y, int16_t *minx,
@@ -255,20 +268,18 @@ public:
   void initButton(Adafruit_GFX *gfx, int16_t x, int16_t y, uint16_t w,
                   uint16_t h, uint16_t outline, uint16_t fill,
                   uint16_t textcolor, char *label, uint8_t textsize);
-				  
   void initButton(Adafruit_GFX *gfx, int16_t x, int16_t y, uint16_t w,
                   uint16_t h, uint16_t outline, uint16_t fill,
                   uint16_t textcolor, char *label, uint8_t textsize_x,
                   uint8_t textsize_y);
-				  
   void initButton(Adafruit_GFX *gfx, int16_t x, int16_t y, uint16_t w,
                   uint16_t h, uint16_t outline, uint16_t fill,
-                  uint16_t textcolor, uint16_t pressedcolor, char *label, uint8_t textsize);
-				  
+                  uint16_t textcolor, uint16_t pressedcolor, char *label,
+                  uint8_t textsize);
   void initButton(Adafruit_GFX *gfx, int16_t x, int16_t y, uint16_t w,
                   uint16_t h, uint16_t outline, uint16_t fill,
-                  uint16_t textcolor, uint16_t pressedcolor, char *label, uint8_t textsize_x,
-                  uint8_t textsize_y);
+                  uint16_t textcolor, uint16_t pressedcolor, char *label,
+                  uint8_t textsize_x, uint8_t textsize_y);
   // New/alt initButton() uses upper-left corner & size
   void initButtonUL(Adafruit_GFX *gfx, int16_t x1, int16_t y1, uint16_t w,
                     uint16_t h, uint16_t outline, uint16_t fill,
@@ -277,18 +288,15 @@ public:
                     uint16_t h, uint16_t outline, uint16_t fill,
                     uint16_t textcolor, char *label, uint8_t textsize_x,
                     uint8_t textsize_y);
-
-
-
-  // New/alt initButton() uses upper-left corner & size, with 'pressedcolor'
   void initButtonUL(Adafruit_GFX *gfx, int16_t x1, int16_t y1, uint16_t w,
                     uint16_t h, uint16_t outline, uint16_t fill,
-                    uint16_t textcolor, uint16_t pressedcolor, char *label, uint8_t textsize);
+                    uint16_t textcolor, uint16_t pressedcolor, char *label,
+                    uint8_t textsize);
   void initButtonUL(Adafruit_GFX *gfx, int16_t x1, int16_t y1, uint16_t w,
                     uint16_t h, uint16_t outline, uint16_t fill,
-                    uint16_t textcolor, uint16_t pressedcolor, char *label, uint8_t textsize_x,
-                    uint8_t textsize_y);
-					
+                    uint16_t textcolor, uint16_t pressedcolor, char *label,
+                    uint8_t textsize_x, uint8_t textsize_y);
+
   void drawButton(bool inverted = false);
   bool contains(int16_t x, int16_t y);
 
@@ -313,17 +321,39 @@ public:
   */
   /**********************************************************************/
   bool isPressed(void) { return currstate; };
-  
   /**********************************************************************/
   /*!
     @brief    Get the label text for the button
     @returns  text shown on the button
   */
   /**********************************************************************/
-  char* getLabel();
-  
+  const char *getLabel() const { return _label; };
+  /**********************************************************************/
+  /*!
+    @brief  Get or Set the radius for rounded button corners.
+  */
+  /**********************************************************************/
   int radius = 4;
-  
+
+  /**********************************************************************/
+  /*!
+    @brief  Get or Set the font used on the button.
+	if null, the 'current' font will be used
+  */
+  /**********************************************************************/
+  GFXfont *gfxFont;    
+
+  /**********************************************************************/
+  /*!
+    @brief    Gets the bounding rect for the button
+    @param    xStart  x co-ord of top left
+    @param    yStart  y co-ord of top left
+    @param    xEnd  x co-ord of botttom right
+    @param    yEnd  y co-ord of botttom right
+  */
+  /**********************************************************************/
+  void getBoundingRect(int16_t *xStart, int16_t *yStart, int16_t *xEnd, int16_t *yEnd);
+
 private:
   Adafruit_GFX *_gfx;
   int16_t _x1, _y1; // Coordinates of top-left corner
@@ -331,7 +361,7 @@ private:
   uint8_t _textsize_x;
   uint8_t _textsize_y;
   uint16_t _outlinecolor, _fillcolor, _textcolor, _pressedcolor;
-  
+  bool _buttonEnabled;
   
   static const int _maxlabellength = 40;
   char _label[_maxlabellength];
