@@ -1551,7 +1551,7 @@ void Adafruit_GFX::invertDisplay(bool i) {
 /**************************************************************************/
 GFXfont* Adafruit_GFX::getFont()
 {
-  return gfxFont; 
+  return gfxFont;
 }
 /***************************************************************************/
 
@@ -1787,6 +1787,7 @@ void Adafruit_GFX_Button::initButtonUL(Adafruit_GFX *gfx, int16_t x1,
   _textsize_x = textsize_x;
   _textsize_y = textsize_y;
   _gfx = gfx;
+  _buttonEnabled = true;
   strncpy(_label, label, _maxlabellength - 1);
 }
 
@@ -1817,27 +1818,37 @@ void Adafruit_GFX_Button::drawButton(bool inverted) {
    if(_buttonEnabled)
    {
 	  _gfx->fillRoundRect(_x1, _y1, _w, _h, r, fill);
+    _gfx->drawRoundRect(_x1, _y1, _w, _h, r, outline);
    }
-	_gfx->drawRoundRect(_x1, _y1, _w, _h, r, outline);
+   else
+   {
+     _gfx->fillRoundRect(_x1, _y1, _w, _h, r, _disabledbackcolor);
+     _gfx->drawRoundRect(_x1, _y1, _w, _h, r, _disabledforecolor);
+   }
   }
   else
   {
     if(_buttonEnabled)
     {
 	  _gfx->fillRect(_x1, _y1, _w, _h, fill);
+    _gfx->drawRect(_x1, _y1, _w, _h, outline);
     }
-	_gfx->drawRect(_x1, _y1, _w, _h, outline);
+    else
+    {
+      _gfx->fillRect(_x1, _y1, _w, _h, _disabledbackcolor);
+      _gfx->drawRect(_x1, _y1, _w, _h, _disabledforecolor);
+    }
   }
-  
+
   if (_gfx->getFont())
   {
-	// using a proportional font
-    int16_t  x1, y1; 
-	uint16_t w, h;
-	_gfx->getTextBounds(_label, 20, 20, &x1, &y1, &w, &h);
-	int textPosX = _x1 + (_w/2)- ((w/2) * _textsize_x);
+	  // using a proportional font
+    int16_t  x1, y1;
+	  uint16_t w, h;
+	  _gfx->getTextBounds(_label, 20, 20, &x1, &y1, &w, &h);
+	  int textPosX = _x1 + (_w/2)- ((w/2) * _textsize_x);
     int textPosY = _y1 + (_h * 0.6);
-	_gfx->setCursor(textPosX, textPosY);
+	  _gfx->setCursor(textPosX, textPosY);
   }
   else
   {
@@ -1845,17 +1856,17 @@ void Adafruit_GFX_Button::drawButton(bool inverted) {
 	_gfx->setCursor(_x1 + (_w / 2) - (strlen(_label) * 3 * _textsize_x),
                   _y1 + (_h / 2) - (4 * _textsize_y));
   }
- 
- _gfx->setTextColor(text);
+  if(_buttonEnabled)
+  {
+    _gfx->setTextColor(text);
+  }
+  else
+  {
+    _gfx->setTextColor(_disabledforecolor);
+  }
   _gfx->setTextSize(_textsize_x, _textsize_y);
   _gfx->print(_label);
 }
-
-char* Adafruit_GFX_Button::getLabel()
-{
-	return _label;
-}
-
 
   /**********************************************************************/
   /*!

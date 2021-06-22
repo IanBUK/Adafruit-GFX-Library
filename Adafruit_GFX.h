@@ -330,6 +330,20 @@ public:
   const char *getLabel() const { return _label; };
   /**********************************************************************/
   /*!
+    @brief    Set the label text for the button
+    @param  text shown on the button
+  */
+  /**********************************************************************/
+  void setLabel(char *newLabel) {sprintf(_label, "%s",newLabel);}//, _label = newLabel; };
+  /**********************************************************************/
+  /*!
+    @brief    Set the label text for the button
+    @param  text shown on the button
+  */
+  /**********************************************************************/
+  void setLabel(int newLabel) {sprintf(_label, "%d",newLabel);}//, _label = newLabel; };
+  /**********************************************************************/
+  /*!
     @brief  Get or Set the radius for rounded button corners.
   */
   /**********************************************************************/
@@ -341,7 +355,7 @@ public:
 	if null, the 'current' font will be used
   */
   /**********************************************************************/
-  GFXfont *gfxFont;    
+  GFXfont *gfxFont;
 
   /**********************************************************************/
   /*!
@@ -354,6 +368,55 @@ public:
   /**********************************************************************/
   void getBoundingRect(int16_t *xStart, int16_t *yStart, int16_t *xEnd, int16_t *yEnd);
 
+
+  /**********************************************************************/
+  /*!
+    @brief    Query whether the button is currently enabled
+    @returns  True if enabled
+  */
+  /**********************************************************************/
+  bool isEnabled() { return _buttonEnabled;};
+
+  /**********************************************************************/
+  /*!
+    @brief    Sets whether the button is enabled - doesn't redraw
+    @param    enabled  True for enabled, false for disabled.
+  */
+  /**********************************************************************/
+  void setEnabled(bool enabled) {_buttonEnabled = enabled;};
+
+  /**********************************************************************/
+  /*!
+    @brief    Get the current disabled backcolour for the button
+    @returns  color
+  */
+  /**********************************************************************/
+  uint16_t getDisabledBackColor() { return _disabledbackcolor;};
+
+  /**********************************************************************/
+  /*!
+    @brief    Sets the disabled backcolour for the button
+    @param    the new disabled backcolour for the button
+  */
+  /**********************************************************************/
+  void setDisabledBackColor(uint16_t disabledBackColor) {_disabledbackcolor = disabledBackColor;};
+
+  /**********************************************************************/
+  /*!
+    @brief    Get the current disabled foreolour for the button
+    @returns  color
+  */
+  /**********************************************************************/
+  uint16_t getDisabledForeColor() { return _disabledforecolor;};
+
+  /**********************************************************************/
+  /*!
+    @brief    Sets the disabled foreolour for the button
+    @param    the new disabled foreolour for the button
+  */
+  /**********************************************************************/
+  void setDisabledForeColor(uint16_t disabledForeColor) {_disabledforecolor = disabledForeColor;};
+
 private:
   Adafruit_GFX *_gfx;
   int16_t _x1, _y1; // Coordinates of top-left corner
@@ -362,7 +425,9 @@ private:
   uint8_t _textsize_y;
   uint16_t _outlinecolor, _fillcolor, _textcolor, _pressedcolor;
   bool _buttonEnabled;
-  
+  uint16_t _disabledbackcolor = 0xFFE0;
+  uint16_t _disabledforecolor = 0xFFE0;
+
   static const int _maxlabellength = 40;
   char _label[_maxlabellength];
 
