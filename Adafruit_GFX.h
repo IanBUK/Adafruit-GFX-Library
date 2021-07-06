@@ -263,6 +263,7 @@ protected:
 class Adafruit_GFX_Button {
 
 public:
+    enum buttonStyle {normal, image};
   Adafruit_GFX_Button(void);
   // "Classic" initButton() uses center & size
   void initButton(Adafruit_GFX *gfx, int16_t x, int16_t y, uint16_t w,

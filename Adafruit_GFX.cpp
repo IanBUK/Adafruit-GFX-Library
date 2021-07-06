@@ -1823,7 +1823,7 @@ void Adafruit_GFX_Button::drawButton(bool inverted) {
    else
    {
      _gfx->fillRoundRect(_x1, _y1, _w, _h, r, _disabledbackcolor);
-     _gfx->drawRoundRect(_x1, _y1, _w, _h, r, _disabledforecolor);
+     _gfx->drawRoundRect(_x1, _y1, _w, _h, r, outline);
    }
   }
   else
@@ -1836,7 +1836,7 @@ void Adafruit_GFX_Button::drawButton(bool inverted) {
     else
     {
       _gfx->fillRect(_x1, _y1, _w, _h, _disabledbackcolor);
-      _gfx->drawRect(_x1, _y1, _w, _h, _disabledforecolor);
+      _gfx->drawRect(_x1, _y1, _w, _h, outline);
     }
   }
 
